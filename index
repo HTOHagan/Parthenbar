@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Golf Trip</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="container">
+    <h1>🏌️ Golf Trip</h1>
+    <p class="small">Trip hub: tee times, maps, and rooms.</p>
+
+    <section class="card">
+      <h2>Overview</h2>
+      <p><strong>Dates:</strong> (fill in)</p>
+      <p><strong>Where:</strong> (fill in)</p>
+      <p><strong>House/Hotel:</strong> (fill in)</p>
+    </section>
+
+    <section class="card">
+      <h2>Quick Links</h2>
+
+      <div class="row">
+        <div class="row-left">
+          <div class="row-title">Group Chat</div>
+          <div class="row-sub">Text thread / WhatsApp</div>
+        </div>
+        <a class="btn" target="_blank" rel="noopener" href="#">Open</a>
+      </div>
+
+      <div class="row">
+        <div class="row-left">
+          <div class="row-title">Lodging Info</div>
+          <div class="row-sub">Address / check-in details</div>
+        </div>
+        <a class="btn" target="_blank" rel="noopener" href="#">Open</a>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Notes</h2>
+      <p class="small">Add anything important here (arrival times, dinner plans, etc.).</p>
+    </section>
+  </main>
+
+  <nav class="bottom-nav">
+    <div class="nav-inner">
+      <a class="nav-link active" href="index.html">Welcome</a>
+      <a class="nav-link" href="tee-times.html">Tee Times</a>
+      <a class="nav-link" href="maps.html">Maps</a>
+      <a class="nav-link" href="rooms.html">Rooms</a>
+    </div>
+  </nav>
+</body>
+</html>
