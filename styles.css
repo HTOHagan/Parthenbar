@@ -1,67 +1,75 @@
-/* Par Then Bar — NAVIGATION-FIRST MOBILE STYLE */
+/* Par Then Bar — clean, classic, navigation-first */
+
+/* Fonts: classic golf feel + modern readability */
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Source+Sans+3:wght@400;600;700&display=swap');
 
 :root {
-  --bg: #0f172a;          /* deep slate */
-  --card: #111827;        /* dark card */
-  --text: #f9fafb;        /* near white */
-  --muted: #9ca3af;       /* gray text */
-  --accent: #22c55e;      /* green action */
-  --line: rgba(255,255,255,.08);
+  --bg: #f6f6f4;          /* soft off-white */
+  --card: #ffffff;
+  --text: #0f1f16;        /* deep green-black */
+  --muted: #55665c;
+  --accent: #0b6b3a;      /* classic green */
+  --line: rgba(15,31,22,.12);
 }
 
+/* Base */
 * { box-sizing: border-box; }
 
 body {
   margin: 0;
-  font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
   background: var(--bg);
   color: var(--text);
+  font-family: "Source Sans 3", system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
 }
 
 .container {
-  max-width: 480px;
+  max-width: 520px;
   margin: 0 auto;
-  padding: 14px 12px 96px;
+  padding: 16px 14px 96px; /* space for bottom nav */
 }
 
+/* Headings */
 h1 {
-  font-size: 20px;
-  margin: 4px 0 10px;
+  font-family: "Libre Baskerville", Georgia, serif;
+  font-size: 26px;
+  margin: 6px 0 8px;
 }
 
 h2 {
-  font-size: 14px;
-  margin: 0 0 10px;
-  color: var(--muted);
+  font-size: 13px;
   text-transform: uppercase;
-  letter-spacing: .06em;
+  letter-spacing: .08em;
+  color: var(--accent);
+  margin: 0 0 10px;
 }
 
 p {
   margin: 6px 0;
   color: var(--muted);
-  line-height: 1.35;
+  line-height: 1.4;
 }
 
 .small {
   font-size: 13px;
+  color: var(--muted);
 }
 
 /* Cards */
 .card {
   background: var(--card);
+  border: 1px solid var(--line);
   border-radius: 16px;
   padding: 14px;
   margin: 12px 0;
 }
 
-/* Rows */
+/* Rows (tee times, rooms, links) */
 .row {
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 12px;
-  padding: 14px 0;
+  padding: 12px 0;
   border-top: 1px solid var(--line);
 }
 
@@ -86,39 +94,53 @@ p {
   color: var(--muted);
 }
 
-/* Buttons — BIG and obvious */
+/* Buttons — big, obvious, car-friendly */
 .btn {
   min-height: 52px;
-  padding: 0 16px;
-  border-radius: 14px;
+  padding: 0 18px;
+  border-radius: 999px;
   background: var(--accent);
-  color: #052e16;
+  color: #ffffff;
   font-weight: 800;
   text-decoration: none;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   white-space: nowrap;
+  border: none;
 }
 
 .btn.secondary {
-  background: rgba(255,255,255,.08);
-  color: var(--text);
+  background: transparent;
+  color: var(--accent);
+  border: 1px solid var(--accent);
 }
 
-/* Bottom nav */
+/* Pills (addresses, notes) */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: #fafafa;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+/* Bottom navigation (thumb-first) */
 .bottom-nav {
   position: fixed;
-  bottom: 0;
   left: 0;
   right: 0;
-  background: #020617;
+  bottom: 0;
+  background: rgba(246,246,244,.96);
   border-top: 1px solid var(--line);
   padding: 10px 12px calc(10px + env(safe-area-inset-bottom));
 }
 
 .nav-inner {
-  max-width: 480px;
+  max-width: 520px;
   margin: 0 auto;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -127,19 +149,21 @@ p {
 
 .nav-link {
   min-height: 52px;
-  border-radius: 14px;
-  background: rgba(255,255,255,.06);
-  color: var(--text);
+  border-radius: 999px;
+  background: #ffffff;
+  border: 1px solid var(--line);
+  color: var(--accent);
   text-decoration: none;
-  font-weight: 700;
+  font-weight: 800;
+  font-size: 13px;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .nav-link.active {
-  background: var(--accent);
-  color: #052e16;
+  background: rgba(11,107,58,.12);
+  border-color: rgba(11,107,58,.35);
 }
 
 a { -webkit-tap-highlight-color: transparent; }
