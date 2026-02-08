@@ -1,4 +1,11 @@
-/* Par Then Bar — clean, classic, navigation-first */
+:root {
+  --bg: #ffffff;         /* pure white background */
+  --card: #ffffff;
+  --text: #0f1f16;
+  --muted: #55665c;
+  --accent: #0b6b3a;
+  --line: rgba(15,31,22,.12);
+}
 
 /* Fonts: classic golf feel + modern readability */
 @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Source+Sans+3:wght@400;600;700&display=swap');
