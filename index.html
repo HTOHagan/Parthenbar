@@ -3,44 +3,67 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Golf Trip</title>
+  <title>Par Then Bar</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <main class="container">
-    <h1>🏌️ Golf Trip</h1>
-    <p class="small">Trip hub: tee times, maps, and rooms.</p>
+    <h1>🏌️ Par Then Bar</h1>
+    <p class="small">Myrtle Beach trip hub: tee times, maps, rooms.</p>
 
     <section class="card">
-      <h2>Overview</h2>
-      <p><strong>Dates:</strong> (fill in)</p>
-      <p><strong>Where:</strong> (fill in)</p>
-      <p><strong>House/Hotel:</strong> (fill in)</p>
+      <h2>Hotel</h2>
+      <p><strong>Sand Dunes Resort</strong> (back at the Dunes for another year)</p>
+      <p class="small">201 74th Ave N, Myrtle Beach, SC 29572</p>
+
+      <div style="display:flex; gap:10px; margin-top:12px; flex-wrap:wrap;">
+        <a class="btn" target="_blank" rel="noopener"
+           href="https://waze.com/ul?q=201+74th+Ave+N,+Myrtle+Beach,+SC+29572&navigate=yes">Navigate (Waze)</a>
+
+        <a class="btn secondary" target="_blank" rel="noopener"
+           href="https://www.google.com/maps/search/?api=1&query=201+74th+Ave+N,+Myrtle+Beach,+SC+29572">Google</a>
+
+        <a class="btn secondary" target="_blank" rel="noopener"
+           href="https://maps.apple.com/?q=201+74th+Ave+N,+Myrtle+Beach,+SC+29572">Apple</a>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Dates</h2>
+      <p><strong>Check-in:</strong> Monday Feb 23, 2026 — 4:00 PM</p>
+      <p><strong>Check-out:</strong> Sunday Mar 1, 2026 — 11:00 AM</p>
     </section>
 
     <section class="card">
       <h2>Quick Links</h2>
-
       <div class="row">
         <div class="row-left">
-          <div class="row-title">Group Chat</div>
-          <div class="row-sub">Text thread / WhatsApp</div>
+          <div class="row-title">Tee Times</div>
+          <div class="row-sub">Course schedule + foursomes</div>
         </div>
-        <a class="btn" target="_blank" rel="noopener" href="#">Open</a>
+        <a class="btn" href="tee-times.html">Open</a>
       </div>
 
       <div class="row">
         <div class="row-left">
-          <div class="row-title">Lodging Info</div>
-          <div class="row-sub">Address / check-in details</div>
+          <div class="row-title">Maps</div>
+          <div class="row-sub">Waze / Google / Apple links</div>
         </div>
-        <a class="btn" target="_blank" rel="noopener" href="#">Open</a>
+        <a class="btn" href="maps.html">Open</a>
+      </div>
+
+      <div class="row">
+        <div class="row-left">
+          <div class="row-title">Rooms</div>
+          <div class="row-sub">Room assignments (easy updates)</div>
+        </div>
+        <a class="btn" href="rooms.html">Open</a>
       </div>
     </section>
 
     <section class="card">
       <h2>Notes</h2>
-      <p class="small">Add anything important here (arrival times, dinner plans, etc.).</p>
+      <p class="small">We’ll add foursomes + room assignments as soon as they’re finalized.</p>
     </section>
   </main>
 
