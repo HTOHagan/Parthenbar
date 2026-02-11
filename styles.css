@@ -62,7 +62,11 @@ p { margin: 6px 0; color: var(--muted); line-height: 1.4; }
 
 .row-left { display: flex; flex-direction: column; gap: 4px; }
 .row-title { font-size: 16px; font-weight: 700; color: var(--text); }
-.row-sub { font-size: 13px; color: var(--muted); }
+.row-sub { 
+  font-size: 18px; 
+  font-weight: 700; 
+  color: #0b6b3a; 
+}
 
 .btn {
   min-height: 52px;
