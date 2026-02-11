@@ -105,7 +105,11 @@ p { margin: 6px 0; color: var(--muted); line-height: 1.4; }
   grid-template-columns: repeat(3, 1fr);
   gap: 8px;
 }
-
+.tee-detail {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text);
+}
 .nav-link {
   min-height: 52px;
   border-radius: 999px;
