@@ -1,327 +1,61 @@
-/* Par Then Bar — clean, classic, navigation-first */
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Par Then Bar</title>
+  <link rel="stylesheet" href="styles.css?v=3" />
+</head>
+<body>
+  <main class="container">
+    <h1>🏌️ Par Then Bar</h1>
+    <p class="small">Myrtle Beach trip hub: tee times & rooms.</p>
 
-/* Force white background no matter what */
-html, body { background: #ffffff !important; }
+    <section class="card">
+      <h2>Hotel</h2>
+      <p><strong>Sand Dunes Resort</strong></p>
+      <p class="small">201 74th Ave N, Myrtle Beach, SC 29572</p>
+    </section>
 
-/* Fonts: classic golf feel + modern readability */
-@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Source+Sans+3:wght@400;600;700&display=swap');
+    <section class="card">
+      <h2>Quick Links</h2>
 
-:root {
-  --bg: #ffffff;
-  --card: #ffffff;
-  --text: #0f1f16;
-  --muted: #55665c;
-  --accent: #0b6b3a;
-  --line: rgba(15,31,22,.12);
-}
+      <div class="row">
+        <div class="row-left">
+          <div class="row-title">Tee Times</div>
+          <div class="row-sub">Schedule + navigation</div>
+        </div>
+        <a class="btn" href="tee-times.html">Open</a>
+      </div>
 
-* { box-sizing: border-box; }
+      <div class="row">
+        <div class="row-left">
+          <div class="row-title">Matchi</div>
+          <div class="row-sub">Match scheduling</div>
+        </div>
+        <a class="btn" target="_blank" rel="noopener"
+           href="https://htohagan.github.io/Thematchi/">
+          Open
+        </a>
+      </div>
 
-body {
-  margin: 0;
-  background: var(--bg);
-  color: var(--text);
-  font-family: "Source Sans 3", system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
-}
+      <div class="row">
+        <div class="row-left">
+          <div class="row-title">Rooms</div>
+          <div class="row-sub">Room assignments</div>
+        </div>
+        <a class="btn secondary" href="rooms.html">Open</a>
+      </div>
 
-.container {
-  max-width: 520px;
-  margin: 0 auto;
-  padding: 16px 14px 96px;
-}
+    </section>
+  </main>
 
-/* Headings */
-h1 {
-  font-family: "Libre Baskerville", Georgia, serif;
-  font-size: 26px;
-  margin: 6px 0 8px;
-}
-
-h2 {
-  font-size: 13px;
-  text-transform: uppercase;
-  letter-spacing: .08em;
-  color: var(--accent);
-  margin: 0 0 10px;
-}
-
-p {
-  margin: 6px 0;
-  color: var(--muted);
-  line-height: 1.4;
-}
-
-.small { font-size: 13px; color: var(--muted); }
-
-/* Cards */
-.card {
-  background: var(--card);
-  border: 1px solid var(--line);
-  border-radius: 16px;
-  padding: 14px;
-  margin: 12px 0;
-}
-
-/* Rows */
-.row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 12px;
-  padding: 12px 0;
-  border-top: 1px solid var(--line);
-}
-.row:first-of-type { border-top: 0; padding-top: 4px; }
-
-.row-left { display: flex; flex-direction: column; gap: 4px; }
-.row-title { font-size: 16px; font-weight: 700; }
-.row-sub { font-size: 13px; color: var(--muted); }
-
-/* Buttons */
-.btn {
-  min-height: 52px;
-  padding: 0 18px;
-  border-radius: 999px;
-  background: var(--accent);
-  color: #ffffff;
-  font-weight: 800;
-  text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  white-space: nowrap;
-  border: none;
-}
-
-.btn.secondary {
-  background: transparent;
-  color: var(--accent);
-  border: 1px solid var(--accent);
-}
-
-/* Pills */
-.pill {
-  display: inline-flex;
-  align-items: center;
-  padding: 8px 10px;
-  border-radius: 999px;
-  border: 1px solid var(--line);
-  background: #fafafa;
-  font-size: 13px;
-  color: var(--muted);
-}
-
-/* Bottom nav */
-.bottom-nav {
-  position: fixed;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(255,255,255,.96);
-  border-top: 1px solid var(--line);
-  padding: 10px 12px calc(10px + env(safe-area-inset-bottom));
-}
-
-.nav-inner {
-  max-width: 520px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 8px;
-}
-
-.nav-link {
-  min-height: 52px;
-  border-radius: 999px;
-  background: #ffffff;
-  border: 1px solid var(--line);
-  color: var(--accent);
-  text-decoration: none;
-  font-weight: 800;
-  font-size: 13px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.nav-link.active {
-  background: rgba(11,107,58,.12);
-  border-color: rgba(11,107,58,.35);
-}
-
-a { -webkit-tap-highlight-color: transparent; }:root {
-  --bg: #ffffff;         /* pure white background */
-  --card: #ffffff;
-  --text: #0f1f16;
-  --muted: #55665c;
-  --accent: #0b6b3a;
-  --line: rgba(15,31,22,.12);
-}
-
-/* Fonts: classic golf feel + modern readability */
-@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Source+Sans+3:wght@400;600;700&display=swap');
-
-:root {
-  --bg: #ffffff;         /* pure white background */
-  --card: #ffffff;
-  --text: #0f1f16;
-  --muted: #55665c;
-  --accent: #0b6b3a;
-  --line: rgba(15,31,22,.12);
-}
-
-/* Base */
-* { box-sizing: border-box; }
-
-body {
-  margin: 0;
-  background: var(--bg);
-  color: var(--text);
-  font-family: "Source Sans 3", system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
-}
-
-.container {
-  max-width: 520px;
-  margin: 0 auto;
-  padding: 16px 14px 96px; /* space for bottom nav */
-}
-
-/* Headings */
-h1 {
-  font-family: "Libre Baskerville", Georgia, serif;
-  font-size: 26px;
-  margin: 6px 0 8px;
-}
-
-h2 {
-  font-size: 13px;
-  text-transform: uppercase;
-  letter-spacing: .08em;
-  color: var(--accent);
-  margin: 0 0 10px;
-}
-
-p {
-  margin: 6px 0;
-  color: var(--muted);
-  line-height: 1.4;
-}
-
-.small {
-  font-size: 13px;
-  color: var(--muted);
-}
-
-/* Cards */
-.card {
-  background: var(--card);
-  border: 1px solid var(--line);
-  border-radius: 16px;
-  padding: 14px;
-  margin: 12px 0;
-}
-
-/* Rows (tee times, rooms, links) */
-.row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 12px;
-  padding: 12px 0;
-  border-top: 1px solid var(--line);
-}
-
-.row:first-of-type {
-  border-top: 0;
-  padding-top: 4px;
-}
-
-.row-left {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.row-title {
-  font-size: 16px;
-  font-weight: 700;
-}
-
-.row-sub {
-  font-size: 13px;
-  color: var(--muted);
-}
-
-/* Buttons — big, obvious, car-friendly */
-.btn {
-  min-height: 52px;
-  padding: 0 18px;
-  border-radius: 999px;
-  background: var(--accent);
-  color: #ffffff;
-  font-weight: 800;
-  text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  white-space: nowrap;
-  border: none;
-}
-
-.btn.secondary {
-  background: transparent;
-  color: var(--accent);
-  border: 1px solid var(--accent);
-}
-
-/* Pills (addresses, notes) */
-.pill {
-  display: inline-flex;
-  align-items: center;
-  padding: 8px 10px;
-  border-radius: 999px;
-  border: 1px solid var(--line);
-  background: #fafafa;
-  font-size: 13px;
-  color: var(--muted);
-}
-
-/* Bottom navigation (thumb-first) */
-.bottom-nav {
-  position: fixed;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(246,246,244,.96);
-  border-top: 1px solid var(--line);
-  padding: 10px 12px calc(10px + env(safe-area-inset-bottom));
-}
-
-.nav-inner {
-  max-width: 520px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 8px;
-}
-
-.nav-link {
-  min-height: 52px;
-  border-radius: 999px;
-  background: #ffffff;
-  border: 1px solid var(--line);
-  color: var(--accent);
-  text-decoration: none;
-  font-weight: 800;
-  font-size: 13px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.nav-link.active {
-  background: rgba(11,107,58,.12);
-  border-color: rgba(11,107,58,.35);
-}
-
-a { -webkit-tap-highlight-color: transparent; }
+  <nav class="bottom-nav">
+    <div class="nav-inner">
+      <a class="nav-link active" href="index.html">Welcome</a>
+      <a class="nav-link" href="tee-times.html">Tee Times</a>
+      <a class="nav-link" href="rooms.html">Rooms</a>
+    </div>
+  </nav>
+</body>
+</html>
