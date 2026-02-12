@@ -1,74 +1,139 @@
-@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Source+Sans+3:wght@400;600;700&display=swap');
+/* Par Then Bar — Clean Mobile App Style (white, readable, golf vibe) */
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Source+Sans+3:wght@400;600;700;800&display=swap');
 
-:root {
+:root{
   --bg: #ffffff;
   --card: #ffffff;
   --text: #0f1f16;
   --muted: #55665c;
-  --accent: #0b6b3a;
+  --accent: #0b6b3a;         /* Par Then Bar green */
+  --accentSoft: rgba(11,107,58,.12);
   --line: rgba(15,31,22,.12);
+  --radius: 16px;
 }
 
-* { box-sizing: border-box; }
+*{ box-sizing:border-box; }
 
-body {
-  margin: 0;
+html, body{
   background: var(--bg);
+}
+
+body{
+  margin: 0;
   color: var(--text);
   font-family: "Source Sans 3", system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
 }
 
-.container {
-  max-width: 520px;
+/* Layout */
+.container{
+  max-width: 560px;
   margin: 0 auto;
-  padding: 16px 14px 96px;
+  padding: 16px 14px 104px; /* room for bottom nav */
 }
 
-h1 {
+/* Typography */
+h1{
   font-family: "Libre Baskerville", Georgia, serif;
-  font-size: 26px;
-  margin: 6px 0 8px;
+  font-size: 28px;
+  margin: 6px 0 10px;
+  letter-spacing: -0.2px;
 }
 
-h2 {
-  font-size: 20px;
-  font-weight: 700;
-  text-transform: none;
-  letter-spacing: 0;
-  color: var(--text);
+h2{
+  font-family: "Source Sans 3", system-ui, sans-serif;
+  font-size: 18px;            /* bigger course headings */
+  font-weight: 800;
   margin: 0 0 10px;
+  color: var(--text);
 }
 
-p { margin: 6px 0; color: var(--muted); line-height: 1.4; }
-.small { font-size: 13px; color: var(--muted); }
+p{
+  margin: 6px 0;
+  line-height: 1.35;
+  color: var(--muted);
+}
 
-.card {
+.small{
+  font-size: 14px;
+  color: var(--muted);
+}
+
+/* Cards */
+.card{
   background: var(--card);
   border: 1px solid var(--line);
-  border-radius: 16px;
+  border-radius: var(--radius);
   padding: 14px;
   margin: 12px 0;
 }
 
-.row {
+/* Divider */
+.divider{
+  height: 1px;
+  background: var(--line);
+  margin: 12px 0;
+}
+
+/* Rows (used in Rooms + Quick Links lists) */
+.row{
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
   gap: 12px;
   padding: 12px 0;
   border-top: 1px solid var(--line);
 }
-.row:first-of-type { border-top: 0; }
-
-.row-left { display: flex; flex-direction: column; gap: 4px; }
-.row-title { font-size: 22px; font-weight: 800; color: var(--text); }
-.row-sub { 
-  font-size: 24px; 
-  font-weight: 600; 
-  color: #0b6b3a; 
+.row:first-of-type{
+  border-top: 0;
+  padding-top: 4px;
 }
 
-.btn {
+.row-left{
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* Room number (slightly bigger) */
+.row-title{
+  font-size: 20px;     /* “just a hair bigger” */
+  font-weight: 800;
+  color: var(--text);
+}
+
+/* Names / detail lines (rooms big + green + bold) */
+.row-sub{
+  font-size: 22px;     /* bigger for visibility */
+  font-weight: 800;
+  color: var(--accent);
+  line-height: 1.15;
+}
+
+/* Tee time detail line (time + address) */
+.tee-detail{
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--text);
+  line-height: 1.2;
+}
+
+/* Dates + Events */
+.date-line{
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--text);
+}
+
+.event-line{
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--accent);
+  margin: 6px 0;
+}
+
+/* Buttons (big, thumb-friendly) */
+.btn{
   min-height: 52px;
   padding: 0 18px;
   border-radius: 999px;
@@ -80,37 +145,36 @@ p { margin: 6px 0; color: var(--muted); line-height: 1.4; }
   align-items: center;
   justify-content: center;
   border: none;
+  white-space: nowrap;
 }
 
-.btn.secondary {
+.btn.secondary{
   background: transparent;
   color: var(--accent);
   border: 1px solid var(--accent);
 }
 
-.bottom-nav {
+/* Bottom nav (3 tabs) */
+.bottom-nav{
   position: fixed;
   left: 0;
   right: 0;
   bottom: 0;
   background: rgba(255,255,255,.96);
+  backdrop-filter: blur(10px);
   border-top: 1px solid var(--line);
   padding: 10px 12px calc(10px + env(safe-area-inset-bottom));
 }
 
-.nav-inner {
-  max-width: 520px;
+.nav-inner{
+  max-width: 560px;
   margin: 0 auto;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 8px;
 }
-.tee-detail {
-  font-size: 20px;
-  font-weight: 700;
-  color: var(--text);
-}
-.nav-link {
+
+.nav-link{
   min-height: 52px;
   border-radius: 999px;
   background: #ffffff;
@@ -118,25 +182,16 @@ p { margin: 6px 0; color: var(--muted); line-height: 1.4; }
   color: var(--accent);
   text-decoration: none;
   font-weight: 800;
-  font-size: 13px;
+  font-size: 14px;
   display: flex;
   align-items: center;
   justify-content: center;
 }
-.date-line {
-  font-size: 18px;
-  font-weight: 700;
-  color: var(--text);
+
+.nav-link.active{
+  background: var(--accentSoft);
+  border-color: rgba(11,107,58,.35);
 }
 
-.event-line {
-  font-size: 18px;
-  font-weight: 700;
-  color: #0b6b3a;
-  margin: 6px 0;
-}
-.nav-link.active {
-  background: rgba(11,107,58,.12);
-}
-
-a { -webkit-tap-highlight-color: transparent; }
+/* Tap feel */
+a{ -webkit-tap-highlight-color: transparent; }
