@@ -32,16 +32,16 @@ body{
 
 /* Logo */
 .logo-wrap{
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 10px 0 18px;
+  margin: 16px 0 24px;
 }
 
 .logo{
-  width: 140px;
-  max-width: 40vw;   /* scales on smaller screens */
-  height: auto;      /* keeps proportions */
+  width: clamp(140px, 30vw, 220px);
+  height: auto;
   display: block;
 }
 
