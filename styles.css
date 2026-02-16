@@ -30,6 +30,21 @@ body{
   padding: 16px 14px 104px;
 }
 
+/* Logo */
+.logo-wrap{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px 0 18px;
+}
+
+.logo{
+  width: 140px;
+  max-width: 40vw;   /* scales on smaller screens */
+  height: auto;      /* keeps proportions */
+  display: block;
+}
+
 /* Typography */
 h1{
   font-family: "Libre Baskerville", Georgia, serif;
