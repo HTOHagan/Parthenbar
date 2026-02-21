@@ -312,3 +312,60 @@ a{ -webkit-tap-highlight-color: transparent; }
   flex-wrap:wrap;
   margin-top: 12px;
 }
+/* Button Row */
+.button-row {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 14px;
+}
+
+/* Live Header */
+.live-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Status Pill */
+.pill {
+  background: var(--primary);
+  color: white;
+  font-size: 12px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-weight: 700;
+}
+
+/* Photo Grid */
+.photo-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.photo-grid img {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: transform .15s ease;
+}
+
+.photo-grid img:hover {
+  transform: scale(1.02);
+}
+
+@media (min-width: 600px) {
+  .photo-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (min-width: 900px) {
+  .photo-grid {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
