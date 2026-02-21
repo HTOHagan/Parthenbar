@@ -15,6 +15,7 @@
 
     <h1>Photos</h1>
 
+    <!-- Upload / View Card -->
     <section class="card">
       <h2>Delco Cup Photos</h2>
       <p class="small">Upload a photo or view the full gallery.</p>
@@ -26,15 +27,18 @@
           Upload Photo
         </a>
 
-       <a class="btn secondary" target="_blank" rel="noopener"
-   href="https://www.dropbox.com/scl/fo/b0hvhi5od49qil9c4e76p/AAsV8bh1eYgjJ2p1feFLmkg?rlkey=zuesmdykiy1dpfz2yrr5jm2gh&dl=0">
-  View Gallery
-</a>
-<section class="card">
-  <h2>Live Gallery</h2>
-  <div id="photo-grid" class="photo-grid"></div>
-</section>
+        <a class="btn secondary" target="_blank" rel="noopener"
+           href="https://www.dropbox.com/scl/fo/b0hvhi5od49qil9c4e76p/AAsV8bh1eYgjJ2p1feFLmkg?rlkey=zuesmdykiy1dpfz2yrr5jm2gh&dl=0">
+          View Gallery
+        </a>
+
       </div>
+    </section>
+
+    <!-- Live Grid Card -->
+    <section class="card">
+      <h2>Live Gallery</h2>
+      <div id="photo-grid" class="photo-grid"></div>
     </section>
 
   </main>
@@ -47,6 +51,32 @@
       <a class="nav-link active" href="photos.html">Photos</a>
     </div>
   </nav>
+
+  <!-- Script goes here -->
+  <script>
+  async function loadPhotos() {
+    const res = await fetch("https://morning-pine-c289.hz7rv6p2c8.workers.dev/list");
+    const data = await res.json();
+
+    const grid = document.getElementById("photo-grid");
+    grid.innerHTML = "";
+
+    if (!data.photos || data.photos.length === 0) {
+      grid.innerHTML = "<p class='small'>No photos yet.</p>";
+      return;
+    }
+
+    data.photos.forEach(photo => {
+      const img = document.createElement("img");
+      img.src = photo.url;
+      img.alt = photo.name;
+      img.onclick = () => window.open(photo.url, "_blank");
+      grid.appendChild(img);
+    });
+  }
+
+  loadPhotos();
+  </script>
 
 </body>
 </html>
