@@ -1,82 +1,135 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Photos</title>
-  <link rel="stylesheet" href="styles.css?v=5" />
-</head>
-<body>
-  <main class="container">
+export default {
+  async fetch(req, env) {
+    const url = new URL(req.url);
 
-    <div class="logo-wrap">
-      <img src="Delcocup%20logo.png" alt="Delco Cup Logo" class="logo">
-    </div>
+    // CORS
+    const cors = {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "GET, OPTIONS",
+      "Access-Control-Allow-Headers": "Content-Type",
+    };
+    if (req.method === "OPTIONS") return new Response(null, { headers: cors });
 
-    <h1>Photos</h1>
-
-    <!-- Upload / View Card -->
-    <section class="card">
-      <h2>Delco Cup Photos</h2>
-      <p class="small">Upload a photo or view the full gallery.</p>
-
-      <div style="display:flex; gap:12px; flex-wrap:wrap; margin-top:14px;">
-
-        <a class="btn" target="_blank" rel="noopener"
-           href="https://www.dropbox.com/request/4l9paOEDZwa7gl8U2I31">
-          Upload Photo
-        </a>
-
-        <a class="btn secondary" target="_blank" rel="noopener"
-           href="https://www.dropbox.com/scl/fo/b0hvhi5od49qil9c4e76p/AAsV8bh1eYgjJ2p1feFLmkg?rlkey=zuesmdykiy1dpfz2yrr5jm2gh&dl=0">
-          View Gallery
-        </a>
-
-      </div>
-    </section>
-
-    <!-- Live Grid Card -->
-    <section class="card">
-      <h2>Live Gallery</h2>
-      <div id="photo-grid" class="photo-grid"></div>
-    </section>
-
-  </main>
-
-  <nav class="bottom-nav">
-    <div class="nav-inner">
-      <a class="nav-link" href="index.html">Welcome</a>
-      <a class="nav-link" href="tee-times.html">Tee Times</a>
-      <a class="nav-link" href="rooms.html">Rooms</a>
-      <a class="nav-link active" href="photos.html">Photos</a>
-    </div>
-  </nav>
-
-  <!-- Script goes here -->
-  <script>
-  async function loadPhotos() {
-    const res = await fetch("https://morning-pine-c289.hz7rv6p2c8.workers.dev/list");
-    const data = await res.json();
-
-    const grid = document.getElementById("photo-grid");
-    grid.innerHTML = "";
-
-    if (!data.photos || data.photos.length === 0) {
-      grid.innerHTML = "<p class='small'>No photos yet.</p>";
-      return;
+    // Health check
+    if (url.pathname === "/") {
+      return new Response("delco-photos worker ok", { headers: cors });
     }
 
-    data.photos.forEach(photo => {
-      const img = document.createElement("img");
-      img.src = photo.url;
-      img.alt = photo.name;
-      img.onclick = () => window.open(photo.url, "_blank");
-      grid.appendChild(img);
-    });
-  }
+    // Serve a thumbnail as JPEG (works for HEIC/MOV too)
+    // /thumb?path=/file/path/in/dropbox
+    if (url.pathname === "/thumb") {
+      const path = url.searchParams.get("path");
+      if (!path) return new Response("Missing path", { status: 400, headers: cors });
 
-  loadPhotos();
-  </script>
+      const r = await fetch("https://content.dropboxapi.com/2/files/get_thumbnail_v2", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${env.DROPBOX_ACCESS_TOKEN}`,
+          "Content-Type": "application/json",
+          "Dropbox-API-Arg": JSON.stringify({
+            resource: { ".tag": "path", path },
+            format: "jpeg",
+            size: "w640h480",
+            mode: "strict",
+          }),
+        },
+      });
 
-</body>
-</html>
+      if (!r.ok) {
+        const err = await r.text();
+        return new Response(err, { status: 500, headers: cors });
+      }
+
+      // Dropbox returns JSON in header + binary body
+      const contentType = r.headers.get("content-type") || "image/jpeg";
+      return new Response(r.body, {
+        headers: { ...cors, "Content-Type": contentType, "Cache-Control": "public, max-age=300" },
+      });
+    }
+
+    // List photos/videos in folder and return thumb URLs + file URLs
+    if (url.pathname === "/list") {
+      const folderPath = "/File requests/Delco Cup Photo Upload";
+
+      const listResp = await fetch("https://api.dropboxapi.com/2/files/list_folder", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${env.DROPBOX_ACCESS_TOKEN}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          path: folderPath,
+          recursive: false,
+          include_media_info: true,
+          include_deleted: false,
+        }),
+      });
+
+      if (!listResp.ok) {
+        const err = await listResp.text();
+        return new Response(
+          JSON.stringify(
+            {
+              error: true,
+              dropbox_status: listResp.status,
+              body_first_300: err.slice(0, 300),
+            },
+            null,
+            2
+          ),
+          { status: 500, headers: { ...cors, "Content-Type": "application/json" } }
+        );
+      }
+
+      const data = await listResp.json();
+
+      // Keep images + videos (for IG-like thumbnails)
+      const entries = (data.entries || [])
+        .filter((e) => e[".tag"] === "file")
+        .filter((e) => /\.(jpg|jpeg|png|webp|gif|heic|mov|mp4)$/i.test(e.name))
+        .sort((a, b) => (b.server_modified || "").localeCompare(a.server_modified || ""))
+        .slice(0, 120);
+
+      const origin = url.origin;
+
+      // For each file, we return:
+      // - thumb: worker-served jpeg thumbnail
+      // - file: temporary link (may not open for HEIC in browser, but okay for download)
+      const out = [];
+      for (const f of entries) {
+        const path = f.path_lower;
+
+        // Temporary link for the original file (good for JPG/PNG/MP4; HEIC may download)
+        let fileUrl = "";
+        try {
+          const temp = await fetch("https://api.dropboxapi.com/2/files/get_temporary_link", {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${env.DROPBOX_ACCESS_TOKEN}`,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ path }),
+          });
+          if (temp.ok) {
+            const j = await temp.json();
+            fileUrl = j.link || "";
+          }
+        } catch {}
+
+        out.push({
+          name: f.name,
+          modified: f.server_modified,
+          path,
+          thumb: `${origin}/thumb?path=${encodeURIComponent(path)}`,
+          file: fileUrl,
+        });
+      }
+
+      return new Response(JSON.stringify({ photos: out }), {
+        headers: { ...cors, "Content-Type": "application/json" },
+      });
+    }
+
+    return new Response("Not found", { status: 404, headers: cors });
+  },
+};
