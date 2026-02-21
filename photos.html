@@ -1,3 +1,11 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Photos</title>
+  <link rel="stylesheet" href="styles.css?v=99" />
+</head>
 <body>
   <main class="container">
 
@@ -7,40 +15,86 @@
 
     <h1>Photos</h1>
 
-    <!-- Upload Section -->
     <section class="card">
       <h2>Delco Cup Photos</h2>
       <p class="small">Upload a photo or view the full gallery.</p>
 
       <div class="button-row">
-        <a class="btn" target="_blank"
+        <a class="btn" target="_blank" rel="noopener"
            href="https://www.dropbox.com/request/4l9paOEDZwa7gl8U2I31">
           Upload Photo
         </a>
 
-        <a class="btn secondary" target="_blank"
+        <a class="btn secondary" target="_blank" rel="noopener"
            href="https://www.dropbox.com/scl/fo/b0hvhi5od49qil9c4e76p/AAsV8bh1eYgjJ2p1feFLmkg?rlkey=zuesmdykiy1dpfz2yrr5jm2gh&dl=0">
           View Gallery
         </a>
+
+        <button class="mini-btn" id="refreshBtn" type="button">Refresh</button>
       </div>
     </section>
 
-    <!-- Live Gallery -->
     <section class="card">
-      <h2>Live Gallery</h2>
-      <p class="small" id="statusText">Loading…</p>
+      <div class="live-head">
+        <h2>Live Gallery</h2>
+        <span class="pill" id="statusText">Loading…</span>
+      </div>
+
       <div id="photo-grid" class="photo-grid"></div>
     </section>
 
   </main>
 
+  <nav class="bottom-nav">
+    <div class="nav-inner">
+      <a class="nav-link" href="index.html">Welcome</a>
+      <a class="nav-link" href="tee-times.html">Tee Times</a>
+      <a class="nav-link" href="rooms.html">Rooms</a>
+      <a class="nav-link active" href="photos.html">Photos</a>
+    </div>
+  </nav>
+
+  <!-- Modal -->
+  <div class="modal" id="modal" aria-hidden="true">
+    <div class="modal-backdrop" id="modalBackdrop"></div>
+    <div class="modal-card">
+      <img id="modalImg" alt="Photo preview" />
+      <div class="modal-actions">
+        <a class="btn" id="openOriginal" target="_blank" rel="noopener">Open Original</a>
+        <button class="btn secondary" id="closeModal" type="button">Close</button>
+      </div>
+    </div>
+  </div>
+
   <script>
+    // IMPORTANT: use YOUR worker base URL
     const API = "https://morning-pine-c289.hz7rv6p2c8.workers.dev";
 
-    async function loadPhotos() {
-      const grid = document.getElementById("photo-grid");
-      const status = document.getElementById("statusText");
+    const grid = document.getElementById("photo-grid");
+    const statusText = document.getElementById("statusText");
 
+    const modal = document.getElementById("modal");
+    const modalImg = document.getElementById("modalImg");
+    const openOriginal = document.getElementById("openOriginal");
+
+    function openModal(thumbUrl, fileUrl) {
+      modal.classList.add("show");
+      modal.setAttribute("aria-hidden", "false");
+      modalImg.src = thumbUrl;
+      openOriginal.href = fileUrl || thumbUrl;
+    }
+
+    function closeModal() {
+      modal.classList.remove("show");
+      modal.setAttribute("aria-hidden", "true");
+      modalImg.src = "";
+    }
+
+    document.getElementById("closeModal").addEventListener("click", closeModal);
+    document.getElementById("modalBackdrop").addEventListener("click", closeModal);
+
+    async function loadPhotos() {
+      statusText.textContent = "Loading…";
       grid.innerHTML = "";
 
       try {
@@ -48,27 +102,29 @@
         const data = await res.json();
 
         if (!data.photos || data.photos.length === 0) {
-          status.textContent = "No photos yet.";
+          statusText.textContent = "No photos yet.";
           return;
         }
 
-        status.textContent = data.photos.length + " items";
+        statusText.textContent = data.photos.length + " items";
 
-        data.photos.forEach(p => {
+        data.photos.forEach(item => {
           const img = document.createElement("img");
-          img.src = p.thumb;
-          img.alt = p.name;
+          img.src = item.thumb;   // thumbnail works for HEIC + MOV
+          img.alt = item.name;
           img.loading = "lazy";
+          img.addEventListener("click", () => openModal(item.thumb, item.file));
           grid.appendChild(img);
         });
-
       } catch (e) {
         console.error(e);
-        status.textContent = "Error loading photos.";
+        statusText.textContent = "Error loading.";
       }
     }
 
+    document.getElementById("refreshBtn").addEventListener("click", loadPhotos);
     loadPhotos();
   </script>
 
 </body>
+</html>
