@@ -11,7 +11,7 @@
 <main class="container">
 
   <div class="logo-wrap">
-    <img src="Delcocup logo.png" alt="Delco Cup Logo" class="logo">
+    <img src="Delcocup%20logo.png" alt="Delco Cup Logo" class="logo">
   </div>
 
   <h1>Photos</h1>
@@ -21,17 +21,14 @@
     <h2>Delco Cup Photos</h2>
     <p class="small">Upload a photo or view the full gallery.</p>
 
-    <div class="button-row">
-      <a class="btn"
-         target="_blank"
-         rel="noopener"
+    <!-- IMPORTANT: match CSS class name -->
+    <div class="btn-row">
+      <a class="btn" target="_blank" rel="noopener"
          href="https://www.dropbox.com/request/4l9paOEDZwa7gl8U2I31">
         Upload Photo
       </a>
 
-      <a class="btn secondary"
-         target="_blank"
-         rel="noopener"
+      <a class="btn secondary" target="_blank" rel="noopener"
          href="https://www.dropbox.com/scl/fo/b0hvhi5od49qil9c4e76p/AAsV8bh1eYgjJ2p1feFLmkg?rlkey=zuesmdykiy1dpfz2yrr5jm2gh&dl=0">
         View Gallery
       </a>
@@ -52,47 +49,76 @@
 
 <nav class="bottom-nav">
   <div class="nav-inner">
-    <a class="nav-link active" href="index.html">Welcome</a>
+    <a class="nav-link" href="index.html">Welcome</a>
     <a class="nav-link" href="tee-times.html">Tee Times</a>
     <a class="nav-link" href="rooms.html">Rooms</a>
-    <a class="nav-link" href="photos.html">Photos</a>
+    <a class="nav-link active" href="photos.html">Photos</a>
     <a class="nav-link" href="rules.html">Rules</a>
   </div>
 </nav>
 
 <script>
-const API = "https://morning-pine-c289.hz7rv6p2c8.workers.dev";
+  const API = "https://morning-pine-c289.hz7rv6p2c8.workers.dev";
 
-const grid = document.getElementById("photo-grid");
-const statusText = document.getElementById("statusText");
+  const grid = document.getElementById("photo-grid");
+  const statusText = document.getElementById("statusText");
 
-async function loadPhotos() {
-  try {
-    const res = await fetch(API + "/list", { cache: "no-store" });
-    const data = await res.json();
+  function setStatus(msg){ statusText.textContent = msg; }
 
-    if (!data.photos || data.photos.length === 0) {
-      statusText.textContent = "No photos yet.";
-      return;
+  async function loadPhotos() {
+    setStatus("Loading…");
+    grid.innerHTML = "";
+
+    try {
+      const res = await fetch(API + "/list", { cache: "no-store" });
+
+      // If Worker returns an error (401/500), show the body in console
+      if (!res.ok) {
+        const text = await res.text();
+        console.log("Worker /list error:", res.status, text);
+        setStatus(`Error (${res.status})`);
+        return;
+      }
+
+      const contentType = res.headers.get("content-type") || "";
+      if (!contentType.includes("application/json")) {
+        const text = await res.text();
+        console.log("Non-JSON from /list:", text);
+        setStatus("Service error (non-JSON)");
+        return;
+      }
+
+      const data = await res.json();
+      const photos = data.photos || [];
+
+      if (!photos.length) {
+        setStatus("No photos yet.");
+        return;
+      }
+
+      setStatus(`${photos.length} items`);
+
+      photos.forEach(item => {
+        const a = document.createElement("a");
+        a.href = item.file || item.thumb;   // fallback if file missing
+        a.target = "_blank";
+        a.rel = "noopener";
+
+        const img = document.createElement("img");
+        img.src = item.thumb;
+        img.alt = item.name || "Photo";
+
+        a.appendChild(img);
+        grid.appendChild(a);
+      });
+
+    } catch (e) {
+      console.error(e);
+      setStatus("Error loading photos");
     }
-
-    statusText.textContent = data.photos.length + " items";
-
-    data.photos.forEach(item => {
-      const img = document.createElement("img");
-      img.src = item.thumb;
-      img.alt = item.name;
-      img.onclick = () => window.open(item.file, "_blank");
-      grid.appendChild(img);
-    });
-
-  } catch (e) {
-    statusText.textContent = "Error loading photos";
-    console.error(e);
   }
-}
 
-loadPhotos();
+  loadPhotos();
 </script>
 
 </body>
