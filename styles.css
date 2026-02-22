@@ -1,42 +1,48 @@
+/* Par Then Bar — Delco Cup Theme (Clean, Global) */
 @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Source+Sans+3:wght@400;600;700;800&display=swap');
 
 :root{
-  --primary:#202d50;
-  --text-main:#77242e;
-  --text-muted:#97978b;
+  --bg:#ffffff;
+  --card:#ffffff;
+
+  --primary:#202d50;     /* dark blue */
+  --text-main:#77242e;   /* maroon */
+  --text-muted:#97978b;  /* muted */
   --line:rgba(0,0,0,.08);
+
+  --tee-red:#c1121f;
+  --alert-red:#d62828;
 
   --radius:16px;
 }
 
 *{ box-sizing:border-box; }
 
-html, body{ height:100%; }
-
 body{
   margin:0;
-  background:#ffffff;
+  background:var(--bg);
   font-family:"Source Sans 3", system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
   color:var(--text-main);
   -webkit-font-smoothing:antialiased;
-  text-rendering:optimizeLegibility;
 }
 
+/* Layout */
 .container{
   max-width:560px;
   margin:0 auto;
-  padding:16px 14px 120px; /* extra space for floating nav */
+  padding:16px 14px 104px; /* space for bottom nav */
 }
 
 /* Logo */
 .logo-wrap{
+  width:100%;
   display:flex;
   justify-content:center;
   align-items:center;
   margin:16px 0 22px;
 }
 .logo{
-  width:clamp(140px,30vw,220px);
+  width:clamp(140px, 28vw, 220px);
   height:auto;
   display:block;
 }
@@ -45,15 +51,22 @@ body{
 h1{
   font-family:"Libre Baskerville", Georgia, serif;
   font-size:28px;
-  margin:6px 0 8px;
+  margin:6px 0 10px;
+  color:var(--text-main);
 }
+
 h2{
   font-size:18px;
   font-weight:800;
-  color:var(--primary);
   margin:0 0 10px;
+  color:var(--primary);
 }
-p{ margin:6px 0; line-height:1.35; }
+
+p{
+  margin:6px 0;
+  line-height:1.35;
+}
+
 .small{
   font-size:14px;
   color:var(--text-muted);
@@ -61,27 +74,18 @@ p{ margin:6px 0; line-height:1.35; }
 
 /* Cards */
 .card{
+  background:var(--card);
   border:1px solid var(--line);
   border-radius:var(--radius);
   padding:14px;
-  margin:14px 0;
-  background:#fff;
+  margin:12px 0;
 }
 
-/* Tee Times (bold red) */
-.tee-detail{
-  font-size:20px;
-  font-weight:900;
-  color:#c1121f;
-  margin:8px 0 14px;
-}
-
-/* Bag Caddies (bold blue) */
-.bag-caddies{
-  font-size:20px;
-  font-weight:900;
-  color:var(--primary);
-  margin:14px 0 6px;
+/* Divider */
+.divider{
+  height:1px;
+  background:var(--line);
+  margin:12px 0;
 }
 
 /* Buttons */
@@ -89,43 +93,107 @@ p{ margin:6px 0; line-height:1.35; }
   display:flex;
   gap:10px;
   flex-wrap:wrap;
+  margin-top:12px;
 }
 
 .btn{
   min-height:48px;
-  padding:0 16px;
+  padding:0 18px;
   border-radius:999px;
   background:var(--primary);
   color:#fff;
-  text-decoration:none;
   font-weight:800;
+  text-decoration:none;
   display:inline-flex;
   align-items:center;
   justify-content:center;
   border:none;
-  cursor:pointer;
 }
 
 .btn.secondary{
-  background:#fff;
+  background:transparent;
   color:var(--primary);
   border:2px solid var(--primary);
 }
 
-.btn:active{ transform:scale(0.98); }
+/* Welcome/Rooms rows */
+.row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  padding:12px 0;
+  border-top:1px solid var(--line);
+}
+.row:first-of-type{ border-top:0; }
 
-/* Foursomes */
-.foursomes{ margin-top:10px; }
+.row-left{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+}
+
+.row-title{
+  font-size:20px;
+  font-weight:800;
+  color:var(--primary);
+}
+
+.row-sub{
+  font-size:20px;      /* keep readable */
+  font-weight:800;     /* bold like you wanted */
+  color:var(--text-main);
+}
+
+/* Dates + Events (Welcome page) */
+.date-line{
+  font-size:18px;
+  font-weight:800;
+  color:var(--text-main);
+}
+
+.event-line{
+  font-size:18px;
+  font-weight:800;
+  color:var(--primary);
+  margin:6px 0;
+}
+
+.event-alert{
+  font-size:18px;
+  font-weight:900;
+  color:var(--alert-red);
+  margin:6px 0;
+}
+
+/* Tee Times (tee-times.html) */
+.tee-detail{
+  font-size:20px;
+  font-weight:900;
+  color:var(--tee-red);     /* RED */
+  margin:8px 0 8px;
+}
+
+.bag-caddies{
+  margin-top:12px;
+  font-size:20px;
+  font-weight:900;
+  color:var(--primary);     /* BLUE */
+}
+
+/* Foursomes block */
+.foursomes{
+  margin-top:10px;
+  border-top:1px solid var(--line);
+}
 
 .f-row{
   display:grid;
-  grid-template-columns:110px 1fr;
+  grid-template-columns:120px 1fr;
   gap:10px;
-  padding:10px 0;
+  padding:12px 0;
   border-bottom:1px solid var(--line);
 }
-
-.f-row:last-child{ border-bottom:none; }
 
 .f-tag{
   font-weight:900;
@@ -137,66 +205,55 @@ p{ margin:6px 0; line-height:1.35; }
   color:var(--text-main);
 }
 
-.muted{
-  color:var(--text-muted);
+.f-names.muted{
   font-weight:800;
+  color:var(--text-muted);
 }
 
-/* Optional callout (if you use it on Friday/Saturday) */
+/* Callouts (Friday/Saturday notes, etc.) */
 .callout{
-  margin:12px 0 6px;
-  padding:10px 12px;
-  border:1px solid var(--line);
+  margin-top:12px;
+  padding:12px;
   border-radius:14px;
-  background:rgba(32,45,80,.05);
+  border:1px solid var(--line);
+  background:rgba(32,45,80,.06);
   color:var(--primary);
   font-weight:900;
 }
 
-/* =========================
-   Floating Bottom Nav
-   ========================= */
+/* Bottom nav (fix: too big on desktop + keep centered) */
 .bottom-nav{
   position:fixed;
   left:0;
   right:0;
   bottom:0;
+  background:rgba(255,255,255,.96);
+  border-top:1px solid var(--line);
   padding:10px 12px calc(10px + env(safe-area-inset-bottom));
-  background:transparent; /* lets the “pill” float */
-  pointer-events:none; /* only inner nav clickable */
+  z-index:50;
 }
 
 .nav-inner{
-  pointer-events:auto;
   max-width:560px;
   margin:0 auto;
   display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:8px;
-
-  background:#ffffff;
-  border:1px solid var(--line);
-  border-radius:999px;
-  padding:8px;
-
-  box-shadow:
-    0 10px 26px rgba(0,0,0,.14),
-    0 2px 8px rgba(0,0,0,.08);
+  grid-template-columns:repeat(4, 1fr);
+  gap:10px;
 }
 
 .nav-link{
-  min-height:42px;           /* slimmer */
+  min-height:46px;          /* smaller than before */
+  padding:0 10px;
   border-radius:999px;
-  border:2px solid var(--primary);
   background:#fff;
+  border:2px solid var(--primary);
   color:var(--primary);
   text-decoration:none;
   font-weight:900;
-  font-size:13px;
+  font-size:14px;           /* readable */
   display:flex;
   align-items:center;
   justify-content:center;
-  padding:0 8px;
   white-space:nowrap;
 }
 
@@ -205,10 +262,12 @@ p{ margin:6px 0; line-height:1.35; }
   color:#fff;
 }
 
-a{ -webkit-tap-highlight-color:transparent; }
-
-/* Small screens: tighten nav a bit */
-@media (max-width:380px){
-  .nav-inner{ gap:6px; padding:7px; }
-  .nav-link{ min-height:40px; font-size:12px; }
+/* Desktop polish: keep nav from looking “giant” */
+@media (min-width: 900px){
+  .container{ padding-bottom:96px; }
+  .nav-link{ min-height:44px; font-size:13px; }
+  .nav-inner{ gap:12px; }
 }
+
+/* Taps */
+a{ -webkit-tap-highlight-color:transparent; }
